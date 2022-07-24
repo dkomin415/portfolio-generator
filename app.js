@@ -1,24 +1,13 @@
+const fs = require('fs');
+const generatePage = require('./src/page-template.js')
+
 const profileDataArgs = process.argv.slice(2, process.argv.length);
 
-// Notice the lack of parenthesses around the `profileDataArr` parameter?
-const printProfileData = profileDataArr => {
-  // This...
-  for(let i = 0; i < profileDataArr.length; i++){
-    console.log(profileDataArr[i]);
-  }
+// assignment destructuring
+const [names, github] = profileDataArgs;
 
-  console.log('====================');
-  
-  // Is the same as this...
-  profileDataArr.forEach((profileItem) => {
-    console.log(profileItem);
-  });
-  
-  console.log('====================');
-  
-  // And this...
-  profileDataArr.forEach(profileItem => console.log(profileItem));
+fs.writeFile('index.html', generatePage(names, github), err => {
+  if (err) throw err;
 
-};
-
-printProfileData(profileDataArgs);
+  console.log('Portfolio complete! Check out index.html to see the output!');
+});
